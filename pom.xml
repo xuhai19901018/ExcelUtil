@@ -7,11 +7,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ExcelUtil</name>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<skipTests>true</skipTests> <!-- 打包时跳过TEST -->
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
