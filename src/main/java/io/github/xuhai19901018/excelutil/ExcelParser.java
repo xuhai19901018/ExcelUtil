@@ -78,8 +78,9 @@ public class ExcelParser {
    *          the end
    * 
    * @return int skip number
+ * @throws Exception 
    */
-  public static int parse(Object context, Sheet sheet, int fromRow, int toRow) {
+  public static int parse(Object context, Sheet sheet, int fromRow, int toRow) throws Exception {
     int[] shift = new int[] { 0, 0, 0 }; // {SkipNum, ShiftNum, break flag}
     int shiftCount = 0;
 
