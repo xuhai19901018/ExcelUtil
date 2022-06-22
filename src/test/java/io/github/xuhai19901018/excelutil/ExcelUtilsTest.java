@@ -92,7 +92,7 @@ public class ExcelUtilsTest {
 			ExcelUtils.addValue("pages", new int[] {1,2,3});
 
 			// 输出Excel
-			ExcelUtils.export("D:\\projects\\CWT\\STS\\gwts\\src\\main\\resources\\templates\\s2.xlsm" , new FileOutputStream(new File("D:\\home\\t1.xlsm")));
+			ExcelUtils.export("D:\\home\\s2.xlsm" , new FileOutputStream(new File("D:\\home\\t2.xlsm")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,13 +122,30 @@ public class ExcelUtilsTest {
 	        patriarch.createPicture(anchor, wb.addPicture(byteArrayOut.toByteArray(), XSSFWorkbook.PICTURE_TYPE_JPEG));
 
 			
-			WorkbookUtils.copyRange(sheet, 0,0,2,100,3,0);
 			
 			WorkbookUtils.SaveWorkbook(wb, new FileOutputStream(new File("D:\\home\\t3.xlsm")));
 			
 			
 			
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	@Test
+	public void t4() {
+		
+		try {
+			
+
+			ExcelUtils.addValue("logo", "D:\\home\\日油.png");
+
+			// 输出Excel
+			ExcelUtils.export("D:\\home\\s4.xlsm" , new FileOutputStream(new File("D:\\home\\t4.xlsm")));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
