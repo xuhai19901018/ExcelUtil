@@ -38,8 +38,9 @@ public interface ITag {
    * @param curRow excel row
    * @param curCell excel cell
    * @return int[] {skip number, shift number, break flag}
+ * @throws Exception 
    */
-  public int[] parseTag(Object context, Sheet sheet, Row curRow, Cell curCell);
+  public int[] parseTag(Object context, Sheet sheet, Row curRow, Cell curCell) throws Exception;
 
   /**
    * tag has #end flag

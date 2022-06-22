@@ -44,7 +44,7 @@ public class ForeachTag implements ITag {
 
   public static final String KEY_END = "#end";
 
-  public int[] parseTag(Object context, Sheet sheet, Row curRow, Cell curCell) {
+  public int[] parseTag(Object context, Sheet sheet, Row curRow, Cell curCell) throws Exception {
     int forstart = curRow.getRowNum();
     int forend = -1;
     int forCount = 0;
