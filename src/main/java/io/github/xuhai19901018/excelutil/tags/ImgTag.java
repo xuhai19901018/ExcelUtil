@@ -27,6 +27,7 @@ public class ImgTag implements ITag {
 	public static final String KEY_IMG = "#img";
 
 	public int[] parseTag(Object context, Sheet sheet, Row curRow, Cell curCell) throws Exception {
+		curCell.setCellValue("");
 		String expr = "";
 		String img = curCell.getStringCellValue();
 		StringTokenizer st = new StringTokenizer(img, " ");
