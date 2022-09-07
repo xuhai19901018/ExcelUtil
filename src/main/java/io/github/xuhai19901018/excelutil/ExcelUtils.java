@@ -17,12 +17,13 @@
 
 package io.github.xuhai19901018.excelutil;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.aspose.cells.License;
+import com.aspose.cells.SaveFormat;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -162,6 +163,24 @@ public class ExcelUtils {
     try {
       export(fileName, getContext(), out);
     } catch (Exception e) {
+      throw new ExcelException(e.getMessage());
+    }
+  }
+
+  public static void exportPdf(String fileName, OutputStream out) throws ExcelException {
+    try {
+      String tempFile = System.getProperty("java.io.tmpdir") + new File(fileName).getName()+".xlsx";
+
+      export(fileName, getContext(), new FileOutputStream(new File(tempFile)));
+//      export(fileName, getContext(), new FileOutputStream(new File("D:\\home\\t4.xlsm")));
+      InputStream is = ExcelUtils.class.getClassLoader().getResourceAsStream("pdfLicense/license.xml");//这个文件应该是类似于密码验证(证书？)，用于获得去除水印的权限
+      License aposeLic = new License();
+      aposeLic.setLicense(is);
+      com.aspose.cells.Workbook wbk = new com.aspose.cells.Workbook(tempFile);
+      wbk.save(out, SaveFormat.PDF);
+
+    } catch (Exception e) {
+      e.printStackTrace();
       throw new ExcelException(e.getMessage());
     }
   }
