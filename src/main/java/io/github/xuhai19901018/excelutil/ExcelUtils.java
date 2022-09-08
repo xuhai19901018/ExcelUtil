@@ -22,7 +22,9 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import com.aspose.cells.IndividualFontConfigs;
 import com.aspose.cells.License;
+import com.aspose.cells.LoadOptions;
 import com.aspose.cells.SaveFormat;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
@@ -184,6 +186,19 @@ public class ExcelUtils {
       throw new ExcelException(e.getMessage());
     }
   }
+
+  public static void exportPdf(String fileName, OutputStream out,String fontFolder) throws ExcelException {
+    try {
+
+      com.aspose.cells.FontConfigs.setFontFolder(fontFolder, true);
+
+      exportPdf(fileName,out);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new ExcelException(e.getMessage());
+    }
+  }
+
 
   /**
    * parse excel and export excel

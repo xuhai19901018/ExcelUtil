@@ -56,7 +56,7 @@ public class PdfTest {
             ExcelUtils.addValue("logo", "D:\\home\\日油.png");
 
             // 输出Excel
-            ExcelUtils.exportPdf("D:\\home\\s4.xlsm", new FileOutputStream(new File("D:\\home\\t4.pdf")));
+            ExcelUtils.exportPdf("D:\\home\\s4.xlsm", new FileOutputStream(new File("D:\\home\\t4.pdf")), "C:\\Windows\\Fonts");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
