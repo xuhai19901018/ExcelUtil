@@ -362,7 +362,7 @@ public class ExcelParser {
                 cell.setCellType(Cell.CELL_TYPE_NUMERIC);
             } else if (bJustExpr && "java.util.Date".equals(className)) {
                 cell.setCellValue((Date) value);
-                cell.setCellType(Cell.CELL_TYPE_STRING);
+                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
             } else if (bJustExpr && "java.lang.Boolean".equals(className)) {
                 cell.setCellValue(((Boolean) value).booleanValue());
                 cell.setCellType(Cell.CELL_TYPE_BOOLEAN);
