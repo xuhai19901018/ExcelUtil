@@ -317,7 +317,7 @@ public class WorkbookUtils {
 			Row fromRow = sheet.getRow(rownum);
 			Row toRow = getRow(to + rownum - from, sheet);
 			if (null == fromRow)
-				return;
+				continue;
 			toRow.setHeight(fromRow.getHeight());
 			toRow.setHeightInPoints(fromRow.getHeightInPoints());
 			int limit = fromRow.getLastCellNum();
@@ -328,7 +328,7 @@ public class WorkbookUtils {
 				toCell.setCellType(fromCell.getCellType());
 
 //			2022年6月22日，新增条件格式 by xuhai
-				List<ConditionalFormattingRule> ruleList = getConditionalRule(sheet, fromCell);
+				List<ConditionalFormattingRule> ruleList = getConditionalRules(sheet, fromCell);
 				if (null != ruleList && ruleList.size() > 0) {
 					CellRangeAddress region = new CellRangeAddress(toCell.getRowIndex(), toCell.getRowIndex(), toCell.getColumnIndex(), toCell.getColumnIndex());
 //					scf.addConditionalFormatting(new CellRangeAddress[] { region },  ruleList.toArray(new ConditionalFormattingRule[ruleList.size()]));
@@ -337,6 +337,18 @@ public class WorkbookUtils {
 						scf.addConditionalFormatting(new CellRangeAddress[] { region }, rule);// 区域内添加规则
 					}
 				}
+
+////				2022年9月27日
+//				ConditionalFormatting conditionalFormatting =getConditionalFormatting(sheet, fromCell.getRowIndex(), fromCell.getColumnIndex() );
+//				if (null != conditionalFormatting) {
+//					CellRangeAddress region = new CellRangeAddress(toCell.getRowIndex(), toCell.getRowIndex(), toCell.getColumnIndex(), toCell.getColumnIndex());
+//
+//					SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();
+//					for (int j = 0; j < conditionalFormatting.getNumberOfRules(); j++) {
+//						scf.addConditionalFormatting(new CellRangeAddress[] { region }, conditionalFormatting.getRule(j));
+//					}
+//				}
+
 
 				switch (fromCell.getCellType()) {
 				case Cell.CELL_TYPE_BOOLEAN:
@@ -381,8 +393,8 @@ public class WorkbookUtils {
 	 * @param cell
 	 * @return
 	 */
-	private static List<ConditionalFormattingRule> getConditionalRule(Sheet sheet, Cell cell) {
-		return getConditionalRule(sheet, cell.getRowIndex(), cell.getColumnIndex());
+	private static List<ConditionalFormattingRule> getConditionalRules(Sheet sheet, Cell cell) {
+		return getConditionalRules(sheet, cell.getRowIndex(), cell.getColumnIndex());
 	}
 
 	/***
@@ -393,7 +405,7 @@ public class WorkbookUtils {
 	 * @param colNum
 	 * @return
 	 */
-	private static List<ConditionalFormattingRule> getConditionalRule(Sheet sheet, int rowNum, int colNum) {
+	private static List<ConditionalFormattingRule> getConditionalRules(Sheet sheet, int rowNum, int colNum) {
 		List<ConditionalFormattingRule> ruleList = new ArrayList<ConditionalFormattingRule>();
 		SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();// 获取sheet中条件格式对象
 		int countOfFormat = scf.getNumConditionalFormattings();// 条件格式的数量
@@ -407,13 +419,29 @@ public class WorkbookUtils {
 						ConditionalFormattingRule rule = format.getRule(j);
 						ruleList.add(rule);
 					}
-
+					break;
 				}
 			}
 
 		}
 
 		return ruleList;
+	}
+
+	private static ConditionalFormatting getConditionalFormatting(Sheet sheet, int rowNum, int colNum) {
+		SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();// 获取sheet中条件格式对象
+		int countOfFormat = scf.getNumConditionalFormattings();// 条件格式的数量
+		for (int i = 0; i < countOfFormat; i++) {
+			ConditionalFormatting format = scf.getConditionalFormattingAt(i);// 第countOfFormat个条件格式
+			CellRangeAddress[] ranges = format.getFormattingRanges();// 条件格式区域
+			for (int r = 0; r < ranges.length; r++) {
+				if (ranges[r].isInRange(rowNum, colNum)) {// cell是否在此区域
+					return format;
+				}
+			}
+
+		}
+		return null;
 	}
 
 	public static void shiftCell(Sheet sheet, Row row, Cell beginCell, int shift, int rowCount) {
