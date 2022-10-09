@@ -245,6 +245,7 @@ public class ExcelUtils {
       for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++) {
         Sheet sheet = wb.getSheetAt(sheetIndex);
         parseSheet(context, sheet);
+        wb.setPrintArea(sheetIndex,(Integer)ExcelParser.getValue(context,"printAreaStartColNo"),(Integer)ExcelParser.getValue(context,"printAreaStartColNo")+(Integer)ExcelParser.getValue(context,"printAreaColumns"),0,(Integer) ExcelParser.getValue(context,"printAreaEndRowNo"));
       }
     } catch (Exception e) {
       throw new ExcelException(e.getMessage());
@@ -264,6 +265,7 @@ public class ExcelUtils {
       Sheet sheet = wb.getSheetAt(sheetIndex);
       if (null != sheet) {
         parseSheet(context, sheet);
+        wb.setPrintArea(sheetIndex,(Integer)ExcelParser.getValue(context,"printAreaStartColNo"),(Integer)ExcelParser.getValue(context,"printAreaStartColNo")+(Integer)ExcelParser.getValue(context,"printAreaColumns"),0,(Integer) ExcelParser.getValue(context,"printAreaEndRowNo"));
       }
 
       int i = 0;
