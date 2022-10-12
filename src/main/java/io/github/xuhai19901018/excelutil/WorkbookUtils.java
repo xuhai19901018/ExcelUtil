@@ -317,16 +317,16 @@ public class WorkbookUtils {
                 toCell.setCellStyle(fromCell.getCellStyle());
                 toCell.setCellType(fromCell.getCellType());
 
-//			2022年6月22日，新增条件格式 by xuhai
-                List<ConditionalFormattingRule> ruleList = getConditionalRules(sheet, fromCell);
-                if (null != ruleList && ruleList.size() > 0) {
-                    CellRangeAddress region = new CellRangeAddress(toCell.getRowIndex(), toCell.getRowIndex(), toCell.getColumnIndex(), toCell.getColumnIndex());
-//					scf.addConditionalFormatting(new CellRangeAddress[] { region },  ruleList.toArray(new ConditionalFormattingRule[ruleList.size()]));
-                    SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();
-                    for (ConditionalFormattingRule rule : ruleList) {
-                        scf.addConditionalFormatting(new CellRangeAddress[]{region}, rule);// 区域内添加规则
-                    }
-                }
+////			2022年6月22日，新增条件格式 by xuhai
+//                List<ConditionalFormattingRule> ruleList = getConditionalRules(sheet, fromCell);
+//                if (null != ruleList && ruleList.size() > 0) {
+//                    CellRangeAddress region = new CellRangeAddress(toCell.getRowIndex(), toCell.getRowIndex(), toCell.getColumnIndex(), toCell.getColumnIndex());
+////					scf.addConditionalFormatting(new CellRangeAddress[] { region },  ruleList.toArray(new ConditionalFormattingRule[ruleList.size()]));
+//                    SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();
+//                    for (ConditionalFormattingRule rule : ruleList) {
+//                        scf.addConditionalFormatting(new CellRangeAddress[]{region}, rule);// 区域内添加规则
+//                    }
+//                }
 
 ////				2022年9月27日
 //				ConditionalFormatting conditionalFormatting =getConditionalFormatting(sheet, fromCell.getRowIndex(), fromCell.getColumnIndex() );

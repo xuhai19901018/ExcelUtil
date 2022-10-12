@@ -217,6 +217,7 @@ public class ExcelUtils {
         for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++) {
             Sheet sheet = wb.getSheetAt(sheetIndex);
             parseSheet(context, sheet);
+            sheet.setForceFormulaRecalculation(true);
             try {//尝试设置打印区域
                 wb.setPrintArea(sheetIndex, (Integer) ExcelParser.getValue(context, "printAreaStartColNo"), (Integer) ExcelParser.getValue(context, "printAreaStartColNo") + (Integer) ExcelParser.getValue(context, "printAreaColumns"), 0, (Integer) ExcelParser.getValue(context, "printAreaEndRowNo"));
             } catch (Exception e) {
@@ -238,6 +239,7 @@ public class ExcelUtils {
         Sheet sheet = wb.getSheetAt(sheetIndex);
         if (null != sheet) {
             parseSheet(context, sheet);
+            sheet.setForceFormulaRecalculation(true);
             try {//尝试设置打印区域
                 wb.setPrintArea(sheetIndex, (Integer) ExcelParser.getValue(context, "printAreaStartColNo"), (Integer) ExcelParser.getValue(context, "printAreaStartColNo") + (Integer) ExcelParser.getValue(context, "printAreaColumns"), 0, (Integer) ExcelParser.getValue(context, "printAreaEndRowNo"));
             } catch (Exception e) {
