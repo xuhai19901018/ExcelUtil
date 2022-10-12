@@ -38,8 +38,9 @@ public class PageTag implements ITag {
   	sheet.setRowBreak(rowNum-1);
 //  	curCell.setCellValue("");
     sheet.removeRow(curRow);
-    sheet.shiftRows(rowNum + 1, sheet.getLastRowNum(), -1, true, true);
-  	return new int[] { 0, -1, 0 };
+    if(rowNum<sheet.getLastRowNum())
+        sheet.shiftRows(rowNum + 1, sheet.getLastRowNum(), -1, true, true);
+  	return new int[] { 0, -1, 1 };
   }
 
   public String getTagName() {

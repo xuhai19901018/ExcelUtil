@@ -166,7 +166,7 @@ public class ForeachTag implements ITag {
     		i = i - 1;
     	}
     }
-    int startRow = forend + 1;
+    int startRow = forstart + 1;
     int endRow = sheet.getLastRowNum();
     if(startRow < endRow){
         sheet.shiftRows(forend + 1, sheet.getLastRowNum(), -(forend - forstart + 1), true, true);

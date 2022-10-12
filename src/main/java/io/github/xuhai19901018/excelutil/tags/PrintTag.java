@@ -53,9 +53,11 @@ public class PrintTag implements ITag {
     ExcelUtils.addValue(context, "printAreaEndRowNo", curRow.getRowNum()-1);
     ExcelUtils.addValue(context, "printAreaStartColNo", curCell.getColumnIndex());
     ExcelUtils.addValue(context, "printAreaColumns", with-1);
-
-    sheet.removeRow(WorkbookUtils.getRow(curRow.getRowNum(), sheet));
-    return new int[] { 1, -1, 1 };
+    int rowNum = curRow.getRowNum();
+    sheet.removeRow(curRow);
+    if(rowNum+1<sheet.getLastRowNum())
+      sheet.shiftRows(rowNum + 1, sheet.getLastRowNum(), -1, true, true);
+    return new int[] { 0, -1, 1 };
   }
 
   public String getTagName() {
