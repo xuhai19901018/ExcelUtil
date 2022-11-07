@@ -16,7 +16,9 @@
  */
 package io.github.xuhai19901018.excelutil.tags;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -123,7 +125,8 @@ public class ForeachTag implements ITag {
     // iterator
     int shiftNum = forend - forstart - 1;
     // set the start row number
-    ExcelUtils.addValue(context, property+"StartRowNo", new Integer(forstart+1));
+    final int StartRowNo = forstart+1;
+    ExcelUtils.addValue(context, property+"StartRowNo", StartRowNo);
     
     int old_forend = forend;
     int propertyId = 0;
@@ -151,7 +154,43 @@ public class ForeachTag implements ITag {
       }
     }
     // set the end row number
-    ExcelUtils.addValue(context, property+"EndRowNo", new Integer(forstart));
+    final int EndRowNo = forstart;
+    ExcelUtils.addValue(context, property+"EndRowNo", forstart);
+
+    // 2022年10月25日、合并掉循环的单元格
+    List<CellRangeAddress> newRegions = new ArrayList<CellRangeAddress>();
+    for (int i = sheet.getNumMergedRegions()-1; i >=0 ; i--) {
+      CellRangeAddress r = sheet.getMergedRegion(i);
+      if (r.getFirstRow() == forstart && r.getLastRow() == forend) {
+        CellRangeAddress n_r = new CellRangeAddress(StartRowNo-1, EndRowNo-1, r.getFirstColumn(), r.getLastColumn());
+        newRegions.add(n_r);
+        sheet.removeMergedRegion(i);
+        Cell fromCell = WorkbookUtils.getCell(sheet, forstart, r.getFirstColumn());
+        Cell toCell = WorkbookUtils.getCell(sheet, StartRowNo-1, r.getFirstColumn());
+        toCell.setCellStyle(fromCell.getCellStyle());
+        toCell.setCellType(fromCell.getCellType());
+        switch (fromCell.getCellType()) {
+          case Cell.CELL_TYPE_BOOLEAN:
+            toCell.setCellValue(fromCell.getBooleanCellValue());
+            break;
+          case Cell.CELL_TYPE_FORMULA:
+            toCell.setCellFormula(fromCell.getCellFormula());
+            break;
+          case Cell.CELL_TYPE_NUMERIC:
+            toCell.setCellValue(fromCell.getNumericCellValue());
+            break;
+          case Cell.CELL_TYPE_STRING:
+            toCell.setCellValue(fromCell.getStringCellValue());
+            break;
+          default:
+        }
+      }
+    }
+    for (CellRangeAddress region :newRegions ) {
+      sheet.addMergedRegion(region);
+    }
+
+
     // delete #foreach #end block
     for (int rownum = forstart; rownum <= forend; rownum++) {
       sheet.removeRow(WorkbookUtils.getRow(rownum, sheet));
