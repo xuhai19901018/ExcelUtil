@@ -216,11 +216,11 @@ public class ExcelUtils {
         int sheetCount = wb.getNumberOfSheets();
         for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++) {
             Sheet sheet = wb.getSheetAt(sheetIndex);
+            parseSheet(context, sheet);
             // sheet名可作为表达式
             String sheetName = sheet.getSheetName();
             sheet.getWorkbook().setSheetName(sheetIndex, (String) ExcelParser.parseStr(context, sheetName));
 
-            parseSheet(context, sheet);
             sheet.setForceFormulaRecalculation(true);
             try {//尝试设置打印区域
                 wb.setPrintArea(sheetIndex, (Integer) ExcelParser.getValue(context, "printAreaStartColNo"), (Integer) ExcelParser.getValue(context, "printAreaStartColNo") + (Integer) ExcelParser.getValue(context, "printAreaColumns"), 0, (Integer) ExcelParser.getValue(context, "printAreaEndRowNo"));
@@ -243,6 +243,9 @@ public class ExcelUtils {
         Sheet sheet = wb.getSheetAt(sheetIndex);
         if (null != sheet) {
             parseSheet(context, sheet);
+            // sheet名可作为表达式
+            String sheetName = sheet.getSheetName();
+            sheet.getWorkbook().setSheetName(sheetIndex, (String) ExcelParser.parseStr(context, sheetName));
             sheet.setForceFormulaRecalculation(true);
             try {//尝试设置打印区域
                 wb.setPrintArea(sheetIndex, (Integer) ExcelParser.getValue(context, "printAreaStartColNo"), (Integer) ExcelParser.getValue(context, "printAreaStartColNo") + (Integer) ExcelParser.getValue(context, "printAreaColumns"), 0, (Integer) ExcelParser.getValue(context, "printAreaEndRowNo"));
