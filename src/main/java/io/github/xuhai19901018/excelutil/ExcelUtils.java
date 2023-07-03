@@ -216,6 +216,10 @@ public class ExcelUtils {
         int sheetCount = wb.getNumberOfSheets();
         for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++) {
             Sheet sheet = wb.getSheetAt(sheetIndex);
+            // sheet名可作为表达式
+            String sheetName = sheet.getSheetName();
+            sheet.getWorkbook().setSheetName(sheetIndex, (String) ExcelParser.parseStr(context, sheetName));
+
             parseSheet(context, sheet);
             sheet.setForceFormulaRecalculation(true);
             try {//尝试设置打印区域
