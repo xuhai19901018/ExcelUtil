@@ -41,18 +41,22 @@ public class PrintTag implements ITag {
     String expr = curCell.getStringCellValue();
     StringTokenizer st = new StringTokenizer(expr, " ");
     int with = 0;
-
+    String repeatingRows = "";
     int pos = 0;
     while (st.hasMoreTokens()) {
       String str = st.nextToken();
       if (pos == 1) {
         with = Integer.parseInt(str);
       }
+      if (pos == 2) {
+        repeatingRows = str;
+      }
       pos++;
     }
     ExcelUtils.addValue(context, "printAreaEndRowNo", curRow.getRowNum()-1);
     ExcelUtils.addValue(context, "printAreaStartColNo", curCell.getColumnIndex());
     ExcelUtils.addValue(context, "printAreaColumns", with-1);
+    ExcelUtils.addValue(context, "repeatingRows", repeatingRows);
     int rowNum = curRow.getRowNum();
     sheet.removeRow(curRow);
     if(rowNum+1<sheet.getLastRowNum())

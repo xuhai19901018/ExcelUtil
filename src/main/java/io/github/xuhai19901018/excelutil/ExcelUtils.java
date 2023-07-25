@@ -30,6 +30,7 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 
 /**
@@ -224,6 +225,7 @@ public class ExcelUtils {
             sheet.setForceFormulaRecalculation(true);
             try {//尝试设置打印区域
                 wb.setPrintArea(sheetIndex, (Integer) ExcelParser.getValue(context, "printAreaStartColNo"), (Integer) ExcelParser.getValue(context, "printAreaStartColNo") + (Integer) ExcelParser.getValue(context, "printAreaColumns"), 0, (Integer) ExcelParser.getValue(context, "printAreaEndRowNo"));
+                sheet.setRepeatingRows(CellRangeAddress.valueOf((String) ExcelParser.getValue(context, "repeatingRows")));
             } catch (Exception e) {
             }
         }
