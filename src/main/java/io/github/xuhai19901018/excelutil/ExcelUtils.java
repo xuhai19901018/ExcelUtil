@@ -157,7 +157,7 @@ public class ExcelUtils {
     }
 
     public static void exportPdf(String fileName, OutputStream out) throws Exception {
-        String tempFile = System.getProperty("java.io.tmpdir") + new File(fileName).getName() + ".xlsx";
+        String tempFile = System.getProperty("java.io.tmpdir") + File.separator +new File(fileName).getName() + ".xlsx";
 
         export(fileName, getContext(), new FileOutputStream(new File(tempFile)));
 //      export(fileName, getContext(), new FileOutputStream(new File("D:\\home\\t4.xlsm")));
