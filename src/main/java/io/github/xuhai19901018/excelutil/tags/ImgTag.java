@@ -76,7 +76,7 @@ public class ImgTag implements ITag {
 
 		ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
 		BufferedImage bufferImg = ImageIO.read(new File(imgPath));
-		ImageIO.write(bufferImg, "png", byteArrayOut);
+		ImageIO.write(bufferImg, "jpg", byteArrayOut);
 
 		Drawing patriarch = sheet.createDrawingPatriarch();
 
