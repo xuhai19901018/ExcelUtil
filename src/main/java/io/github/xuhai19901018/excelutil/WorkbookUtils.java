@@ -27,15 +27,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.ConditionalFormatting;
-import org.apache.poi.ss.usermodel.ConditionalFormattingRule;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 /**
@@ -342,16 +334,16 @@ public class WorkbookUtils {
 
 
                 switch (fromCell.getCellType()) {
-                    case Cell.CELL_TYPE_BOOLEAN:
+                    case BOOLEAN:
                         toCell.setCellValue(fromCell.getBooleanCellValue());
                         break;
-                    case Cell.CELL_TYPE_FORMULA:
+                    case FORMULA:
                         toCell.setCellFormula(fromCell.getCellFormula());
                         break;
-                    case Cell.CELL_TYPE_NUMERIC:
+                    case NUMERIC:
                         toCell.setCellValue(fromCell.getNumericCellValue());
                         break;
-                    case Cell.CELL_TYPE_STRING:
+                    case STRING:
                         toCell.setCellValue(fromCell.getStringCellValue());
                         break;
                     default:
@@ -464,24 +456,24 @@ public class WorkbookUtils {
                 toCell.setCellType(fromCell.getCellType());
                 toCell.setCellStyle(fromCell.getCellStyle());
                 switch (fromCell.getCellType()) {
-                    case Cell.CELL_TYPE_BOOLEAN:
+                    case BOOLEAN:
                         toCell.setCellValue(fromCell.getBooleanCellValue());
                         break;
-                    case Cell.CELL_TYPE_FORMULA:
+                    case FORMULA:
                         toCell.setCellFormula(fromCell.getCellFormula());
                         break;
-                    case Cell.CELL_TYPE_NUMERIC:
+                    case NUMERIC:
                         toCell.setCellValue(fromCell.getNumericCellValue());
                         break;
-                    case Cell.CELL_TYPE_STRING:
+                    case STRING:
                         toCell.setCellValue(fromCell.getStringCellValue());
                         break;
-                    case Cell.CELL_TYPE_ERROR:
+                    case ERROR:
                         toCell.setCellErrorValue(fromCell.getErrorCellValue());
                         break;
                 }
                 fromCell.setCellValue("");
-                fromCell.setCellType(Cell.CELL_TYPE_BLANK);
+                fromCell.setCellType(CellType.BLANK);
                 Workbook wb = sheet.getWorkbook();
                 CellStyle style = wb.createCellStyle();
                 fromCell.setCellStyle(style);

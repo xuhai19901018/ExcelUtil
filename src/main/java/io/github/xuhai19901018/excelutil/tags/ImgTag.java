@@ -80,7 +80,7 @@ public class ImgTag implements ITag {
 
 		Drawing patriarch = sheet.createDrawingPatriarch();
 
-		XSSFClientAnchor anchor = new XSSFClientAnchor(dx1*XSSFShape.EMU_PER_POINT, dy1*XSSFShape.EMU_PER_POINT, dx2*XSSFShape.EMU_PER_POINT, dy2*XSSFShape.EMU_PER_POINT, (short) curCell.getColumnIndex(), curCell.getRowIndex(), (short) (curCell.getColumnIndex() + width), curCell.getRowIndex() + height);
+		XSSFClientAnchor anchor = new XSSFClientAnchor(dx1*12700, dy1*12700, dx2*12700, dy2*12700, (short) curCell.getColumnIndex(), curCell.getRowIndex(), (short) (curCell.getColumnIndex() + width), curCell.getRowIndex() + height);
 
 		patriarch.createPicture(anchor, sheet.getWorkbook().addPicture(byteArrayOut.toByteArray(), XSSFWorkbook.PICTURE_TYPE_PNG));
 

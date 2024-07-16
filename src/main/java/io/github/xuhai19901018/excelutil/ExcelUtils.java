@@ -276,6 +276,7 @@ public class ExcelUtils {
     public static void parseSheet(Object context, Sheet sheet) throws Exception {
         try {
             ExcelParser.parse(context, sheet, sheet.getFirstRowNum(), sheet.getLastRowNum());
+            ExcelParser.parseChart(context, sheet);
         } finally {
             ExcelUtils.context.set(null);
         }

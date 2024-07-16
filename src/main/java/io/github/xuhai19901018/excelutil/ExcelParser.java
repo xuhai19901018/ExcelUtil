@@ -33,11 +33,15 @@ import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 import io.github.xuhai19901018.excelutil.tags.ITag;
+import org.apache.poi.xssf.usermodel.XSSFChart;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 
 /**
@@ -63,6 +67,32 @@ public class ExcelParser {
 
     static {
         tagPackageMap.put(ITag.class.getPackage().getName(), ITag.class.getPackage().getName());
+    }
+
+    /***
+     * 图表填充
+     * @param context
+     * @param sheet
+     * @return
+     * @throws Exception
+     */
+    public static void parseChart(Object context, Sheet sheet) {
+
+        if (sheet instanceof XSSFSheet){
+            XSSFSheet xssfSheet = (XSSFSheet)sheet;
+            XSSFDrawing drawing = xssfSheet.getDrawingPatriarch();
+            if (null !=drawing){
+                List<XSSFChart> charts = drawing.getCharts();
+                if (null != charts && charts.size()>0)
+                    for (XSSFChart chart : charts) {
+                        if (null != chart.getTitleText()){
+                            String expr = chart.getTitleText().toString();
+                            if (null!= expr)
+                                chart.setTitleText((String) parseStr(context, expr));
+                        }
+                    }
+            }
+        }
     }
 
     /**
@@ -106,7 +136,7 @@ public class ExcelParser {
                 if (null == cell) {
                     continue;
                 }
-                if (cell.getCellType() != Cell.CELL_TYPE_STRING) {
+                if (cell.getCellType() != CellType.STRING) {
                     continue;
                 }
                 // if the cell is null then continue
@@ -356,23 +386,23 @@ public class ExcelParser {
 
             if (bJustExpr && ("java.lang.String".equals(className))) {
                 cell.setCellValue(String.valueOf(value));
-                cell.setCellType(Cell.CELL_TYPE_STRING);
+                cell.setCellType(CellType.STRING);
             } else if (bJustExpr && String.valueOf(value).matches("-?[0-9]+.?[0-9]*")) {
                 cell.setCellValue(Double.parseDouble(String.valueOf(value)));
-                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                cell.setCellType(CellType.NUMERIC);
             } else if (bJustExpr && "java.util.Date".equals(className)) {
                 cell.setCellValue((Date) value);
-                cell.setCellType(Cell.CELL_TYPE_NUMERIC);
+                cell.setCellType(CellType.NUMERIC);
             } else if (bJustExpr && "java.lang.Boolean".equals(className)) {
                 cell.setCellValue(((Boolean) value).booleanValue());
-                cell.setCellType(Cell.CELL_TYPE_BOOLEAN);
+                cell.setCellType(CellType.BOOLEAN);
             } else {
                 cell.setCellValue(String.valueOf(value));
-                cell.setCellType(Cell.CELL_TYPE_STRING);
+                cell.setCellType(CellType.STRING);
             }
         } else {
             cell.setCellValue("");
-            cell.setCellType(Cell.CELL_TYPE_BLANK);
+            cell.setCellType(CellType.BLANK);
         }
 
         // merge the cell that has a "!" character at the expression
@@ -382,13 +412,13 @@ public class ExcelParser {
             boolean canMerge = false;
             if (lastCell.getCellType() == cell.getCellType()) {
                 switch (cell.getCellType()) {
-                    case Cell.CELL_TYPE_STRING:
+                    case STRING:
                         canMerge = lastCell.getStringCellValue().equals(cell.getStringCellValue());
                         break;
-                    case Cell.CELL_TYPE_BOOLEAN:
+                    case BOOLEAN:
                         canMerge = lastCell.getBooleanCellValue() == cell.getBooleanCellValue();
                         break;
-                    case Cell.CELL_TYPE_NUMERIC:
+                    case NUMERIC:
                         canMerge = lastCell.getNumericCellValue() == cell.getNumericCellValue();
                         break;
                 }

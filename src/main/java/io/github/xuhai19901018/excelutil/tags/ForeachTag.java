@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -66,7 +67,7 @@ public class ForeachTag implements ITag {
         Cell cell = row.getCell(colnum);
         if (null == cell)
           continue;
-        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+        if (cell.getCellType() == CellType.STRING) {
           String cellstr = cell.getStringCellValue();
 
           // get the tag instance for the cellstr
@@ -170,16 +171,16 @@ public class ForeachTag implements ITag {
         toCell.setCellStyle(fromCell.getCellStyle());
         toCell.setCellType(fromCell.getCellType());
         switch (fromCell.getCellType()) {
-          case Cell.CELL_TYPE_BOOLEAN:
+          case BOOLEAN:
             toCell.setCellValue(fromCell.getBooleanCellValue());
             break;
-          case Cell.CELL_TYPE_FORMULA:
+          case FORMULA:
             toCell.setCellFormula(fromCell.getCellFormula());
             break;
-          case Cell.CELL_TYPE_NUMERIC:
+          case NUMERIC:
             toCell.setCellValue(fromCell.getNumericCellValue());
             break;
-          case Cell.CELL_TYPE_STRING:
+          case STRING:
             toCell.setCellValue(fromCell.getStringCellValue());
             break;
           default:

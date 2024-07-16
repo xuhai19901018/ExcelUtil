@@ -18,6 +18,7 @@
 package io.github.xuhai19901018.excelutil.tags;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -54,7 +55,7 @@ public class IfTag implements ITag {
         Cell cell = row.getCell(colnum);
         if (null == cell)
           continue;
-        if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+        if (cell.getCellType() == CellType.STRING) {
           String cellstr = cell.getStringCellValue();
 
           // get the tag instance for the cellstr
