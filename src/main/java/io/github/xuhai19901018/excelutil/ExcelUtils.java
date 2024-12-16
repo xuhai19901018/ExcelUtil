@@ -22,10 +22,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
-import com.aspose.cells.IndividualFontConfigs;
-import com.aspose.cells.License;
-import com.aspose.cells.LoadOptions;
-import com.aspose.cells.SaveFormat;
+import com.aspose.cells.*;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.LazyDynaBean;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -156,7 +153,7 @@ public class ExcelUtils {
 
     }
 
-    public static void exportPdf(String fileName, OutputStream out) throws Exception {
+    public static void exportPdf(String fileName, OutputStream out, int paperSizeType) throws Exception {
         String tempFile = System.getProperty("java.io.tmpdir") + File.separator +new File(fileName).getName() + ".xlsx";
 
         export(fileName, getContext(), new FileOutputStream(new File(tempFile)));
@@ -165,9 +162,13 @@ public class ExcelUtils {
         License aposeLic = new License();
         aposeLic.setLicense(is);
         com.aspose.cells.Workbook wbk = new com.aspose.cells.Workbook(tempFile);
+        // 设置纸张大小
+        wbk.getWorksheets().get(0).getPageSetup().setPaperSize(paperSizeType);
         wbk.save(out, SaveFormat.PDF);
+    }
 
-
+    public static void exportPdf(String fileName, OutputStream out) throws Exception {
+        exportPdf(fileName, out, PaperSizeType.PAPER_A_4);
     }
 
     public static void exportPdf(String fileName, OutputStream out, String fontFolder) throws Exception {
