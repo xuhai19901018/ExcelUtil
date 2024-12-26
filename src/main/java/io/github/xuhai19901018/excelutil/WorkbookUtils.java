@@ -308,8 +308,11 @@ public class WorkbookUtils {
                 Cell fromCell = getCell(fromRow, i);
                 Cell toCell = getCell(toRow, i);
                 toCell.setCellStyle(fromCell.getCellStyle());
-                toCell.setCellType(fromCell.getCellType());
-
+                if(fromCell.getCellType()==CellType.FORMULA){
+                    toCell.setCellFormula(fromCell.getCellFormula());
+                }else{
+                    toCell.setCellType(fromCell.getCellType());
+                }
 ////			2022年6月22日，新增条件格式 by xuhai
 //                List<ConditionalFormattingRule> ruleList = getConditionalRules(sheet, fromCell);
 //                if (null != ruleList && ruleList.size() > 0) {
@@ -453,7 +456,11 @@ public class WorkbookUtils {
             for (int cellpos = lastCellNum; cellpos >= beginCell.getColumnIndex(); cellpos--) {
                 Cell fromCell = WorkbookUtils.getCell(curRow, cellpos);
                 Cell toCell = WorkbookUtils.getCell(curRow, cellpos + shift);
-                toCell.setCellType(fromCell.getCellType());
+                if(fromCell.getCellType()==CellType.FORMULA){
+                    toCell.setCellFormula(fromCell.getCellFormula());
+                }else{
+                    toCell.setCellType(fromCell.getCellType());
+                }
                 toCell.setCellStyle(fromCell.getCellStyle());
                 switch (fromCell.getCellType()) {
                     case BOOLEAN:

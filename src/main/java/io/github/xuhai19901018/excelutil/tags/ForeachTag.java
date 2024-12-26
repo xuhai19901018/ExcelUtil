@@ -169,7 +169,11 @@ public class ForeachTag implements ITag {
         Cell fromCell = WorkbookUtils.getCell(sheet, forstart, r.getFirstColumn());
         Cell toCell = WorkbookUtils.getCell(sheet, StartRowNo-1, r.getFirstColumn());
         toCell.setCellStyle(fromCell.getCellStyle());
-        toCell.setCellType(fromCell.getCellType());
+        if(fromCell.getCellType()==CellType.FORMULA){
+          toCell.setCellFormula(fromCell.getCellFormula());
+        }else{
+          toCell.setCellType(fromCell.getCellType());
+        }
         switch (fromCell.getCellType()) {
           case BOOLEAN:
             toCell.setCellValue(fromCell.getBooleanCellValue());
