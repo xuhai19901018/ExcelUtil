@@ -47,22 +47,21 @@ public class PdfTest {
         }
 
     }
-    @Test
-    public void t4() {
-
-        try {
-
-
-            ExcelUtils.addValue("logo", "D:\\home\\日油.png");
-
-            // 输出Excel
-            ExcelUtils.exportPdf("D:\\home\\s4.xlsm", new FileOutputStream(new File("D:\\home\\t4.pdf")), "C:\\Windows\\Fonts");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
-    }
+//    @Test
+//    public void t4() {
+//
+//        try {
+//
+//
+////            ExcelUtils.addValue("logo", "D:\\home\\日油.png");
+//
+//            // 输出Excel
+//            ExcelUtils.exportPdf("D:\\home\\s5w.xlsx", new FileOutputStream(new File("D:\\home\\t4.pdf")), PaperSizeType.PAPER_A_4, PageOrientationType.LANDSCAPE,"C:\\Windows\\Fonts");
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 }

@@ -329,16 +329,16 @@ public class WorkbookUtils {
 //                    }
 //                }
 
-//				2022年9月27日
-				ConditionalFormatting conditionalFormatting =getConditionalFormatting(sheet, fromCell.getRowIndex(), fromCell.getColumnIndex() );
-				if (null != conditionalFormatting) {
-					CellRangeAddress region = new CellRangeAddress(toCell.getRowIndex(), toCell.getRowIndex(), toCell.getColumnIndex(), toCell.getColumnIndex());
-
-					SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();
-					for (int j = 0; j < conditionalFormatting.getNumberOfRules(); j++) {
-						scf.addConditionalFormatting(new CellRangeAddress[] { region }, conditionalFormatting.getRule(j));
-					}
-				}
+////				2022年9月27日
+//				ConditionalFormatting conditionalFormatting =getConditionalFormatting(sheet, fromCell.getRowIndex(), fromCell.getColumnIndex() );
+//				if (null != conditionalFormatting) {
+//					CellRangeAddress region = new CellRangeAddress(toCell.getRowIndex(), toCell.getRowIndex(), toCell.getColumnIndex(), toCell.getColumnIndex());
+//
+//					SheetConditionalFormatting scf = sheet.getSheetConditionalFormatting();
+//					for (int j = 0; j < conditionalFormatting.getNumberOfRules(); j++) {
+//						scf.addConditionalFormatting(new CellRangeAddress[] { region }, conditionalFormatting.getRule(j));
+//					}
+//				}
 
 
                 switch (fromCell.getCellType()) {
